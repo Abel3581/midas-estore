@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,7 +23,7 @@ public class RoleEntity {
 
     @Enumerated(EnumType.STRING)
     private RoleEnum name;
-    @OneToOne(mappedBy = "role")
-    private UserEntity user;
+
+
 
 }
