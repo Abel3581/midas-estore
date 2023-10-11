@@ -1,5 +1,6 @@
 package com.midas.store.model;
 
+import com.midas.store.enums.RoleEnum;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,18 +12,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name ="users")
+@Table(name = "roles")
 public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String lastname;
-    @Basic
-    @Column(nullable = false)
-    private String username; //email
-    private String password;
-    private String dni;
-    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private RoleEnum name;
+    @OneToOne(mappedBy = "role")
+    private UserEntity user;
+
 }
