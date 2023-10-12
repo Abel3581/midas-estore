@@ -1,4 +1,4 @@
-package com.midas.store.model;
+package com.midas.store.model.entity;
 
 import com.midas.store.enums.RoleEnum;
 import jakarta.persistence.*;

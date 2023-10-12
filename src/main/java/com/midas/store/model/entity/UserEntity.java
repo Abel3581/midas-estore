@@ -1,4 +1,4 @@
-package com.midas.store.model;
+package com.midas.store.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

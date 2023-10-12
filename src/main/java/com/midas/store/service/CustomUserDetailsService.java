@@ -1,6 +1,6 @@
 package com.midas.store.service;
 
-import com.midas.store.model.UserEntity;
+import com.midas.store.model.entity.UserEntity;
 import com.midas.store.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

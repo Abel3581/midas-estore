@@ -1,6 +1,6 @@
 package com.midas.store.repository;
 
-import com.midas.store.model.UserEntity;
+import com.midas.store.model.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
