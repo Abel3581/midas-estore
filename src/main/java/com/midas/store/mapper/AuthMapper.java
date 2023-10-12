@@ -2,8 +2,11 @@ package com.midas.store.mapper;
 
 import com.midas.store.model.entity.UserEntity;
 import com.midas.store.model.request.RegisterRequest;
+import com.midas.store.model.response.LoginResponse;
 import com.midas.store.model.response.RegisterResponse;
 import org.springframework.stereotype.Component;
+
+import java.util.stream.Collectors;
 
 @Component
 public class AuthMapper {
@@ -20,6 +23,17 @@ public class AuthMapper {
     public RegisterResponse mapToRegisterResponse(UserEntity userCreate) {
         return RegisterResponse.builder()
                 .message("Registro exitoso")
+                .build();
+    }
+
+    public LoginResponse mapToLoginResponse(UserEntity user, String jwt) {
+        return LoginResponse.builder()
+                .name(user.getName())
+                .lastname(user.getLastname())
+                .message("Logueo exitoso")
+                .userId(user.getId())
+                .token(jwt)
+                .role(user.getRoles().stream().map(roleEntity -> roleEntity.getName()).collect(Collectors.toList()).toString())
                 .build();
     }
 }

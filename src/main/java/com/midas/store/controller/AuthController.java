@@ -1,6 +1,8 @@
 package com.midas.store.controller;
 
+import com.midas.store.model.request.LoginRequest;
 import com.midas.store.model.request.RegisterRequest;
+import com.midas.store.model.response.LoginResponse;
 import com.midas.store.model.response.RegisterResponse;
 import com.midas.store.service.injectionDependency.AuthService;
 import jakarta.validation.Valid;
@@ -23,5 +25,11 @@ public class AuthController {
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request){
         RegisterResponse response = authService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request){
+        LoginResponse response = authService.login(request);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
