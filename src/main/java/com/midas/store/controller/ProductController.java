@@ -1,7 +1,9 @@
 package com.midas.store.controller;
 
 import com.midas.store.model.request.ProductRequest;
+import com.midas.store.model.request.ProductUpdateRequest;
 import com.midas.store.model.response.ProductResponse;
+import com.midas.store.model.response.ProductUpdateResponse;
 import com.midas.store.service.injectionDependency.ProductService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -39,5 +41,11 @@ public class ProductController {
     public ResponseEntity<List<ProductResponse>> getAllProduct(){
         List<ProductResponse> responses = productService.getAllProduct();
         return ResponseEntity.status(HttpStatus.OK).body(responses);
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductUpdateResponse> update(@PathVariable Long id, @RequestBody ProductUpdateRequest request){
+        log.info("Entrando al Controller update");
+        ProductUpdateResponse response = productService.update(request, id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

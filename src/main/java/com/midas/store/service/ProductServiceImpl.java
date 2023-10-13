@@ -5,7 +5,9 @@ import com.midas.store.exception.ProductNotFoundException;
 import com.midas.store.mapper.ProductMapper;
 import com.midas.store.model.entity.Product;
 import com.midas.store.model.request.ProductRequest;
+import com.midas.store.model.request.ProductUpdateRequest;
 import com.midas.store.model.response.ProductResponse;
+import com.midas.store.model.response.ProductUpdateResponse;
 import com.midas.store.repository.ProductRepository;
 import com.midas.store.service.injectionDependency.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -58,4 +60,25 @@ public class ProductServiceImpl implements ProductService {
         List<ProductResponse> responses = productMapper.mapToProductResponseList(products);
         return responses;
     }
+
+    @Transactional
+    @Override
+    public ProductUpdateResponse update(ProductUpdateRequest request, Long id) {
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (productOptional.isEmpty()){
+            log.error("Producto no encontrado con id: " + id);
+            throw new ProductNotFoundException("El producto no esta registrado");
+        }
+        Product product = productOptional.get();
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setStock(request.getStock());
+        product.setState(request.isState());
+        product.setCount(request.getCount());
+        ProductUpdateResponse response = productMapper.mapToProductUpdate(product);
+        return response;
+    }
+
+
 }
