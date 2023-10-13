@@ -1,5 +1,7 @@
 package com.midas.store.model.request;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,11 +19,13 @@ public class ProductRequest {
     private String name;
     @NotBlank(message = "La descripcion es requerida")
     private String description;
-    @NotBlank(message = "El precio es requerido")
+    @Min(value = 0, message = "El valor debe ser mayor o igual a 0")
     private double price;
-    @Size(min = 0, max = 100, message = "La cantidad debe ser >= 0 and <= 100")
+    @Min(value = 0, message = "El valor debe ser mayor o igual a 0")
+    @Max(value = 100, message = "El valor debe ser menor o igual a 100")
     private int count;
     private boolean state;
-    @Size(min = 0, max = 1000, message = "Las reservas deben ser >= 0 and <= 1000")
+    @Min(value = 0, message = "El valor debe ser mayor o igual a 0")
+    @Max(value = 1000, message = "El valor debe ser menor o igual a 1000")
     private int stock;
 }
