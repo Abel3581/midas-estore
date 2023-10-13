@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Log4j2
 @RestController
 @RequiredArgsConstructor
@@ -32,5 +34,10 @@ public class ProductController {
     public ResponseEntity<ProductResponse> getById(@PathVariable Long id){
         ProductResponse response = productService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @GetMapping
+    public ResponseEntity<List<ProductResponse>> getAllProduct(){
+        List<ProductResponse> responses = productService.getAllProduct();
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
 }

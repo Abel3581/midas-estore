@@ -5,6 +5,9 @@ import com.midas.store.model.request.ProductRequest;
 import com.midas.store.model.response.ProductResponse;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class ProductMapper {
 
@@ -27,5 +30,11 @@ public class ProductMapper {
                 .state(product.isState())
                 .stock(product.getStock())
                 .build();
+    }
+
+    public List<ProductResponse> mapToProductResponseList(List<Product> products) {
+        return products.stream()
+                .map(product -> mapToProductResponse(product))
+                .collect(Collectors.toList());
     }
 }
