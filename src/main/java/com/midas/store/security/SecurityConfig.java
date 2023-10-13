@@ -54,6 +54,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/user/{id}").permitAll()
                 .requestMatchers(HttpMethod.GET, "/test/accessUser").hasAnyAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.GET, "/test/accessAdmin").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/products").permitAll()
+                .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+                .requestMatchers(HttpMethod.GET, "/products/{id}").permitAll()
                 .anyRequest().permitAll();
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);

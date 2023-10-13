@@ -1,16 +1,15 @@
 package com.midas.store.controller;
 
 import com.midas.store.model.request.ProductRequest;
+import com.midas.store.model.response.ProductResponse;
 import com.midas.store.service.injectionDependency.ProductService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Log4j2
 @RestController
@@ -19,11 +18,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     private final ProductService productService;
+    private final HttpServletRequest request;
 
     @PostMapping
     public ResponseEntity<String> create(@Valid @RequestBody ProductRequest request){
         log.info("Entrando al controlador create" + request.toString());
         productService.create(request);
+
         return ResponseEntity.status(HttpStatus.CREATED).body("Producto creado con exito");
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductResponse> getById(@PathVariable Long id){
+        ProductResponse response = productService.getById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
