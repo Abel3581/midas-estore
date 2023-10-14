@@ -40,4 +40,8 @@ public class GlobalValidationExceptionHandler {
     public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+    @ExceptionHandler(CartNotFoundException.class)
+    public ResponseEntity<String> cartNotFoundException(CartNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
 }
