@@ -48,4 +48,9 @@ public class ProductController {
         ProductUpdateResponse response = productService.update(request, id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleted(@PathVariable Long id){
+        productService.deleted(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Producto borrado con exito");
+    }
 }
