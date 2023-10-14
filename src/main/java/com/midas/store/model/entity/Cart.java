@@ -20,13 +20,17 @@ public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private double total;
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    private double total = 0;
+    @OneToOne(mappedBy = "cart")
     private UserEntity user;
     @ManyToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "product_cart", joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
     private List<Product> products = new ArrayList<>();
+
+    public void addProduct(Product product){
+        products.add(product);
+        total = total + product.getPrice();
+    }
 
 }

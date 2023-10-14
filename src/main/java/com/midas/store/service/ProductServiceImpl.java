@@ -90,5 +90,15 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(product.get());
     }
 
+    @Override
+    public Product findById(Long productId) {
+        Optional<Product> product = productRepository.findById(productId);
+        if (product.isEmpty()){
+            log.error("Producto no encontrado con id: " + productId);
+            throw new ProductNotFoundException("El producto no esta registrado");
+        }
+        return product.get();
+    }
+
 
 }
