@@ -1,9 +1,5 @@
 package com.midas.store.model.response;
 
-
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductResponse {
+public class ProductUpdateResponse {
 
-    private Long id;
+    private String message;
     private String name;
     private String description;
     private double price;

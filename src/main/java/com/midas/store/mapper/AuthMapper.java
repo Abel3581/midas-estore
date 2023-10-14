@@ -1,5 +1,6 @@
 package com.midas.store.mapper;
 
+import com.midas.store.model.entity.Cart;
 import com.midas.store.model.entity.UserEntity;
 import com.midas.store.model.request.RegisterRequest;
 import com.midas.store.model.response.LoginResponse;
@@ -17,6 +18,8 @@ public class AuthMapper {
                 .dni(request.getDni())
                 .address(request.getAddress())
                 .username(request.getUsername())
+                .cart(new Cart()) // Se crea un cart para el usuario
+
                 .build();
     }
 

@@ -42,7 +42,6 @@ public class AuthServiceImpl implements AuthService {
         Optional<UserEntity> userEntity = userRepository.findByUsername(request.getUsername());
         if(userEntity.isPresent()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "El Cliente ya esta registrado");
-
         }
         UserEntity user = authMapper.mapToRegisterRequest(request);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
