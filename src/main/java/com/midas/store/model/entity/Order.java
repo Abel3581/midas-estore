@@ -21,6 +21,7 @@ public class Order {
     private double total;
     private Date purchaseDate;
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private UserEntity user;
     @ManyToMany
     private List<Product> products = new ArrayList<>();

@@ -14,7 +14,7 @@ public class UserMapper {
                 .collect(Collectors.toList());
     }
 
-    private UserResponse mapToUserResponse(UserEntity user) {
+    public UserResponse mapToUserResponse(UserEntity user) {
         return UserResponse.builder()
                 .name(user.getName())
                 .lastname(user.getLastname())

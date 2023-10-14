@@ -1,7 +1,6 @@
 package com.midas.store.seeders;
 
 import com.midas.store.enums.RoleEnum;
-import com.midas.store.model.entity.Cart;
 import com.midas.store.model.entity.RoleEntity;
 import com.midas.store.model.entity.UserEntity;
 import com.midas.store.repository.RoleRepository;

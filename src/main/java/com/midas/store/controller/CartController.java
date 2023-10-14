@@ -1,5 +1,6 @@
 package com.midas.store.controller;
 
+import com.midas.store.model.response.CartResponse;
 import com.midas.store.service.injectionDependency.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,5 +18,10 @@ public class CartController {
     public ResponseEntity<String> addProductToCart(@PathVariable Long cartId, @PathVariable Long productId){
         cartService.addProductToCart(cartId, productId);
         return ResponseEntity.status(HttpStatus.OK).body("Producto agregado al cart con exito");
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<CartResponse> getCartById(@PathVariable Long id){
+        CartResponse response = cartService.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
