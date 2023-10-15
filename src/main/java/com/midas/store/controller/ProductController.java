@@ -22,7 +22,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final HttpServletRequest request;
+
 
     @PostMapping
     public ResponseEntity<String> create(@Valid @RequestBody ProductRequest request){

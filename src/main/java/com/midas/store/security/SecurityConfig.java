@@ -44,6 +44,8 @@ public class SecurityConfig {
     }
 
 
+
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.httpBasic(httpBasic -> httpBasic.disable());
@@ -53,7 +55,7 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/user/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/products").permitAll()
+                .requestMatchers(HttpMethod.POST, "/products").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/products").hasAnyAuthority("CUSTOMER", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/products/{id}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/products/{id}").hasAnyAuthority("ADMIN")

@@ -2,12 +2,11 @@ package com.midas.store.controller;
 
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midas.store.model.request.LoginRequest;
 import com.midas.store.model.request.RegisterRequest;
 import com.midas.store.model.response.LoginResponse;
-import com.midas.store.testutil.TestUtil;
+import com.midas.store.testutil.AuthUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,7 @@ public class AuthControllerIntegrationTest {
 
     @Test
     public void testRegister() throws Exception {
-        RegisterRequest request = TestUtil.createUserTest();
+        RegisterRequest request = AuthUtil.createUserTest();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                 .post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -54,7 +53,7 @@ public class AuthControllerIntegrationTest {
     }
     @Test
     public void testRegisterFailure() throws Exception {
-        RegisterRequest request = TestUtil.createUserTest();
+        RegisterRequest request = AuthUtil.createUserTest();
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -75,14 +74,14 @@ public class AuthControllerIntegrationTest {
     @Test
     public void testLoginSuccess() throws Exception {
         //Creo User en memoria
-        RegisterRequest request = TestUtil.createUserTest();
+        RegisterRequest request = AuthUtil.createUserTest();
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         // Me logueo
-        LoginRequest loginRequest = TestUtil.createLoginTest();
+        LoginRequest loginRequest = AuthUtil.createLoginTest();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -103,14 +102,14 @@ public class AuthControllerIntegrationTest {
     @Test
     public void testLoginIncorrectPass() throws Exception {
         //Creo User en memoria
-        RegisterRequest request = TestUtil.createUserTest();
+        RegisterRequest request = AuthUtil.createUserTest();
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         // Me logueo
-        LoginRequest loginRequest = TestUtil.createLoginIncorrectPass();
+        LoginRequest loginRequest = AuthUtil.createLoginIncorrectPass();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -126,14 +125,14 @@ public class AuthControllerIntegrationTest {
     @Test
     public void testLoginIncorrectUsername() throws Exception {
         //Creo User en memoria
-        RegisterRequest request = TestUtil.createUserTest();
+        RegisterRequest request = AuthUtil.createUserTest();
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(MockMvcResultMatchers.status().isCreated());
         // Me logueo
-        LoginRequest loginRequest = TestUtil.createLoginIncorrectUsername();
+        LoginRequest loginRequest = AuthUtil.createLoginIncorrectUsername();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders
                         .post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)

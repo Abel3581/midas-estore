@@ -3,7 +3,7 @@ package com.midas.store.testutil;
 import com.midas.store.model.request.LoginRequest;
 import com.midas.store.model.request.RegisterRequest;
 
-public class TestUtil {
+public class AuthUtil {
 
     public static RegisterRequest createUserTest(){
         return RegisterRequest.builder()
@@ -30,6 +30,12 @@ public class TestUtil {
     public static LoginRequest createLoginIncorrectUsername(){
         return LoginRequest.builder()
                 .username("cliente123@gmail.com")
+                .password("12345678")
+                .build();
+    }
+    public static LoginRequest createLoginAdmin(){
+        return LoginRequest.builder()
+                .username("admin@gmail.com")
                 .password("12345678")
                 .build();
     }
