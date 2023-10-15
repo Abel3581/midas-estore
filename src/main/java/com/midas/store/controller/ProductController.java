@@ -37,6 +37,7 @@ public class ProductController {
         ProductResponse response = productService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
     @GetMapping
     public ResponseEntity<List<ProductResponse>> getAllProduct(){
         List<ProductResponse> responses = productService.getAllProduct();

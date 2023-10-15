@@ -1,5 +1,6 @@
 package com.midas.store.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midas.store.model.entity.Product;
 import com.midas.store.model.request.ProductRequest;
@@ -10,7 +11,6 @@ import com.midas.store.testutil.ProductUtil;
 import jakarta.transaction.Transactional;
 import org.junit.Before;
 import org.junit.Test;
-
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,18 +21,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-
 import java.util.List;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 
 @Transactional
 @RunWith(SpringRunner.class)
@@ -49,32 +46,13 @@ public class ProductControllerIntegrationTest {
     private ProductService productService;
     @Autowired
     private ProductRepository productRepository;
+
     @Before
     public void setUp() {
         // Cargar datos iniciales en la base de datos de prueba
         List<Product> product = ProductUtil.createProductListTest();
         productRepository.saveAll(product);
     }
-    @Test
-    @WithMockUser(authorities = "ADMIN")
-    public void testGetProductById() throws Exception {
-        Long productId = 1L;
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/products/" + productId))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        String responseJson = result.getResponse().getContentAsString();
-        ProductResponse productResponse = objectMapper.readValue(responseJson, ProductResponse.class);
-        
-        assertEquals(productId, productResponse.getId());
-        assertEquals("Java", productResponse.getName());
-        assertEquals(19.99, productResponse.getPrice(), 0.01);
-        assertEquals("17", productResponse.getDescription());
-        assertEquals(true, productResponse.isState());
-
-
-    }
-
 
 
     @Test
@@ -133,9 +111,60 @@ public class ProductControllerIntegrationTest {
                 });
     }
 
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void testGetProductById() throws Exception {
+        Long productId = 1L;
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/products/" + productId))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        String responseJson = result.getResponse().getContentAsString();
+        ProductResponse productResponse = objectMapper.readValue(responseJson, ProductResponse.class);
+
+        assertEquals(productId, productResponse.getId());
+        assertEquals("Java", productResponse.getName());
+        assertEquals(19.99, productResponse.getPrice(), 0.01);
+        assertEquals("17", productResponse.getDescription());
+        assertEquals(true, productResponse.isState());
 
 
+    }
 
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void testGetProductByIdFailure() throws Exception {
+        Long productId = 3L;
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/products/" + productId))
+                .andExpect(status().isNotFound())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+        assertThat(content).contains("El producto no esta registrado");
+    }
+
+    @Test
+    @WithMockUser(authorities = {"ADMIN", "CUSTOMER"})
+    public void testGetAllProduct() throws Exception {
+        // Realizar la solicitud GET al controlador para obtener todos los productos
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/products"))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        // Obtener la respuesta JSON como una cadena
+        String content = result.getResponse().getContentAsString();
+
+        // Analizar la respuesta JSON a objetos Java (usando ObjectMapper)
+        List<ProductResponse> productResponses = objectMapper.readValue(
+                content,
+                new TypeReference<List<ProductResponse>>() {}
+        );
+
+        // Realizar verificaciones en la lista de Productos
+        assertEquals(2, productResponses.size());
+        assertEquals("Java", productResponses.get(0).getName());
+        assertEquals("Spring Boot", productResponses.get(1).getName());
+    }
 
 
 }
