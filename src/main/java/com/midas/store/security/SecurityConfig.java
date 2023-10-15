@@ -57,7 +57,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/user/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/products").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/products").hasAnyAuthority("CUSTOMER", "ADMIN")
-                .requestMatchers(HttpMethod.GET, "/products/{id}").permitAll()
+                .requestMatchers(HttpMethod.GET, "/products/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/products/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/orders/{cartId}").permitAll()
                 .requestMatchers(HttpMethod.GET,"/orders").hasAnyAuthority("ADMIN")
