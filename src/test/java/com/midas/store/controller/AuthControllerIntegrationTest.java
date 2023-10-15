@@ -2,8 +2,11 @@ package com.midas.store.controller;
 
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.midas.store.model.request.LoginRequest;
 import com.midas.store.model.request.RegisterRequest;
+import com.midas.store.model.response.LoginResponse;
 import com.midas.store.testutil.TestUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +54,7 @@ public class AuthControllerIntegrationTest {
     }
     @Test
     public void testRegisterFailure() throws Exception {
-        RegisterRequest request = this.createRegisterRequest();
+        RegisterRequest request = TestUtil.createUserTest();
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -68,16 +71,79 @@ public class AuthControllerIntegrationTest {
                     assertThat(content).contains("El Cliente ya esta registrado");
                 });
     }
-/*
-    private RegisterRequest createRegisterRequest() {
-        return RegisterRequest.builder()
-                .name("Abel")
-                .username("abel@gmail.com")
-                .dni("1234567890")
-                .address("Garin")
-                .password("12345678")
-                .lastname("Acevedo")
-                .build();
+
+    @Test
+    public void testLoginSuccess() throws Exception {
+        //Creo User en memoria
+        RegisterRequest request = TestUtil.createUserTest();
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+        // Me logueo
+        LoginRequest loginRequest = TestUtil.createLoginTest();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginRequest)))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        // Deserializar la respuesta JSON en un objeto LoginResponse
+        String content = result.getResponse().getContentAsString();
+        LoginResponse response = objectMapper.readValue(content, LoginResponse.class);
+        // Verificar los atributos del objeto LoginResponse
+        assertThat(response.getUserId()).isEqualTo(2L); // Se espera el id 2 porq cuando inicia la app se crea un user admin por defecto
+        assertThat(response.getName()).isEqualTo("Abel");
+        assertThat(response.getLastname()).isEqualTo("Acevedo");
+        assertThat(response.getRole()).isEqualTo("[CUSTOMER]");
+        assertThat(response.getToken()).isNotNull();
+        assertThat(response.getMessage()).isEqualTo("Logueo exitoso");
     }
-*/
+    @Test
+    public void testLoginIncorrectPass() throws Exception {
+        //Creo User en memoria
+        RegisterRequest request = TestUtil.createUserTest();
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+        // Me logueo
+        LoginRequest loginRequest = TestUtil.createLoginIncorrectPass();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginRequest)))
+                .andExpect(MockMvcResultMatchers.status().isForbidden())
+                .andReturn();
+
+        // Deserializar la respuesta JSON en un objeto LoginResponse
+      String content = result.getResponse().getContentAsString();
+      assertThat(content).contains("El nombre de usuario o contraseña es incorrecto");
+    }
+
+    @Test
+    public void testLoginIncorrectUsername() throws Exception {
+        //Creo User en memoria
+        RegisterRequest request = TestUtil.createUserTest();
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+                .andExpect(MockMvcResultMatchers.status().isCreated());
+        // Me logueo
+        LoginRequest loginRequest = TestUtil.createLoginIncorrectUsername();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders
+                        .post("/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(loginRequest)))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andReturn();
+
+        // Deserializar la respuesta JSON en un objeto LoginResponse
+        String content = result.getResponse().getContentAsString();
+        assertThat(content).contains("No hay ninguna cuenta asociada con la dirección de correo electrónico.");
+    }
+
 }

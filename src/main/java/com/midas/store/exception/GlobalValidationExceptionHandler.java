@@ -53,5 +53,9 @@ public class GlobalValidationExceptionHandler {
     public ResponseEntity<String> userAlreadyExist(ResponseStatusException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
     }
+    @ExceptionHandler(IncorrectPasswordException.class)
+    public ResponseEntity<String> incorrectPasswordException(IncorrectPasswordException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+    }
 
 }

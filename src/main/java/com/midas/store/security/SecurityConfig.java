@@ -53,15 +53,13 @@ public class SecurityConfig {
         http.authorizeRequests()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/user/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/test/accessUser").hasAnyAuthority("CUSTOMER")
-                .requestMatchers(HttpMethod.GET, "/test/accessAdmin").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/products").permitAll()
-                //.requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/products").hasAnyAuthority("CUSTOMER", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/products/{id}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/products/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/orders/{cartId}").permitAll()
-                .anyRequest().permitAll();
+                .requestMatchers(HttpMethod.GET,"/orders").hasAnyAuthority("ADMIN")
+                .anyRequest().authenticated();
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
