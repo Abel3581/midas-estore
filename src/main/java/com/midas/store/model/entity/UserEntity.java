@@ -35,7 +35,6 @@ public class UserEntity {
     private Set<RoleEntity> roles = new HashSet<>();
     @OneToOne(cascade = CascadeType.PERSIST)
     private CartEntity cart;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Order> orders = new ArrayList<>();
+
 
 }

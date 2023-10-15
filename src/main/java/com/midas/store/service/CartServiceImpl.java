@@ -50,4 +50,14 @@ public class CartServiceImpl implements CartService {
         return response;
     }
 
+    @Override
+    public CartEntity buyACar(Long cartId) {
+        Optional<CartEntity> cart = cartRepository.findById(cartId);
+        if(cart.isEmpty()){
+            log.error(String.format("El carrito con id %s no está registrado", cartId));
+            throw new  CartNotFoundException(String.format("El carrito con id %s no está registrado", cartId));
+        }
+        return cart.get();
+    }
+
 }

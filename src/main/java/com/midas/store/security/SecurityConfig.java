@@ -60,6 +60,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/products").hasAnyAuthority("CUSTOMER", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/products/{id}").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/products/{id}").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/orders/{cartId}").permitAll()
                 .anyRequest().permitAll();
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
