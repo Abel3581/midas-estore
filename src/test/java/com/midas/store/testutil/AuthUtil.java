@@ -1,7 +1,15 @@
 package com.midas.store.testutil;
 
+import com.midas.store.enums.RoleEnum;
+import com.midas.store.model.entity.CartEntity;
+import com.midas.store.model.entity.RoleEntity;
+import com.midas.store.model.entity.UserEntity;
 import com.midas.store.model.request.LoginRequest;
 import com.midas.store.model.request.RegisterRequest;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class AuthUtil {
 
@@ -37,6 +45,26 @@ public class AuthUtil {
         return LoginRequest.builder()
                 .username("admin@gmail.com")
                 .password("12345678")
+                .build();
+    }
+    public static List<UserEntity> createUserEntityList(){
+        return List.of(
+                new UserEntity(1L,"Abel","Accevedo","customer@gmail.com","12345678","dni1234567","Tortuguitas",
+                        Set.of(new RoleEntity(1L, RoleEnum.ADMIN)),new CartEntity()),
+                new UserEntity(2L,"Mafer","Palencia","customer@gmail.com","12345678","1234567890","Colombia",
+                        Set.of(new RoleEntity(2L,RoleEnum.CUSTOMER)),new CartEntity())
+        );
+    }
+    public static UserEntity createUserCartTest(){
+        return UserEntity.builder()
+                .id(1L)
+                .name("Abel")
+                .lastname("Acevedo")
+                .address("Tortuguitas")
+                .dni("1234567890")
+                .username("abel@gmail.com")
+                .password("12345678")
+                .roles(Set.of(new RoleEntity(1L, RoleEnum.CUSTOMER)))
                 .build();
     }
 }

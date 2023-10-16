@@ -54,13 +54,15 @@ public class SecurityConfig {
 
         http.authorizeRequests()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-                .requestMatchers(HttpMethod.GET,"/user/**").permitAll()
+                .requestMatchers(HttpMethod.GET,"/users").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/products").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/products").hasAnyAuthority("CUSTOMER", "ADMIN")
                 .requestMatchers(HttpMethod.GET, "/products/{id}").hasAnyAuthority("ADMIN","CUSTOMER")
                 .requestMatchers(HttpMethod.PUT, "/products/{id}").hasAnyAuthority("ADMIN","CUSTOMER")
                 .requestMatchers(HttpMethod.POST, "/orders/{cartId}").permitAll()
                 .requestMatchers(HttpMethod.GET,"/orders").hasAnyAuthority("ADMIN")
+                .requestMatchers(HttpMethod.PUT,"/carts/{cartId}/{productId}").hasAnyAuthority("CUSTOMER")
+                .requestMatchers(HttpMethod.GET,"/carts/{id}").hasAnyAuthority("CUSTOMER")
                 .anyRequest().authenticated();
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
