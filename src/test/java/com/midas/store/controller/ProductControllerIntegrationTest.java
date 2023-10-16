@@ -76,6 +76,7 @@ public class ProductControllerIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().string("Producto creado con exito"));
     }
+
     @Test
     @WithMockUser(authorities = {"CUSTOMER"})
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -95,6 +96,7 @@ public class ProductControllerIntegrationTest {
                 });
 
     }
+
     @Test
     @WithMockUser(authorities = {"ADMIN"})
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -228,6 +230,7 @@ public class ProductControllerIntegrationTest {
         String content = result.getResponse().getContentAsString();
         assertThat(content).contains("El producto no esta registrado");
     }
+
     @Test
     @WithMockUser(authorities = "ADMIN")
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -240,6 +243,7 @@ public class ProductControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
         assertFalse(productRepository.findById(productId).isPresent());
     }
+
     @Test
     @WithMockUser(authorities = "ADMIN")
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)

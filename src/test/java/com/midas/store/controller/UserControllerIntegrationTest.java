@@ -69,6 +69,7 @@ public class UserControllerIntegrationTest {
         assertEquals("Mafer", userResponses.get(1).getName());
 
     }
+
     @Test
     @WithMockUser(authorities = "CUSTOMER")
     public void testGetAllUserListWithCustomerRole() throws Exception {
