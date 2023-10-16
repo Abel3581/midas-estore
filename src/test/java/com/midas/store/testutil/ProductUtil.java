@@ -50,4 +50,27 @@ public class ProductUtil {
     }
 
 
+    public static ProductUpdateRequest createProductUpdateFailureTest() {
+        return ProductUpdateRequest.builder()
+                .name("Angular")
+                .price(7000)
+                .stock(60)
+                .state(true)
+                .count(30)
+                .description("29")
+                .build();
+
+    }
+
+    public static Product createProducUpdatetEntityTest() {
+        return Product.builder()
+                .name("PHP")
+                .price(9000)
+                .count(39)
+                .state(true)
+                .stock(18)
+                .description("12")
+                .build();
+
+    }
 }
