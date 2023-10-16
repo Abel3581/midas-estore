@@ -4,8 +4,7 @@ import com.midas.store.model.entity.Product;
 import com.midas.store.model.request.ProductRequest;
 import com.midas.store.model.request.ProductUpdateRequest;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.List;
 
 public class ProductUtil {

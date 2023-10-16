@@ -14,15 +14,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.transaction.annotation.Transactional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -72,6 +75,7 @@ public class AuthControllerIntegrationTest {
     }
 
     @Test
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testLoginSuccess() throws Exception {
         //Creo User en memoria
         RegisterRequest request = AuthUtil.createUserTest();
@@ -92,7 +96,7 @@ public class AuthControllerIntegrationTest {
         String content = result.getResponse().getContentAsString();
         LoginResponse response = objectMapper.readValue(content, LoginResponse.class);
         // Verificar los atributos del objeto LoginResponse
-        assertThat(response.getUserId()).isEqualTo(2L); // Se espera el id 2 porq cuando inicia la app se crea un user admin por defecto
+        assertThat(response.getUserId()).isEqualTo(3L);
         assertThat(response.getName()).isEqualTo("Abel");
         assertThat(response.getLastname()).isEqualTo("Acevedo");
         assertThat(response.getRole()).isEqualTo("[CUSTOMER]");

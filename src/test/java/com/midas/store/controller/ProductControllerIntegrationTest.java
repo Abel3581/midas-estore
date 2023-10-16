@@ -1,6 +1,6 @@
 package com.midas.store.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midas.store.model.entity.Product;
@@ -25,14 +25,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.*;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -79,6 +76,7 @@ public class ProductControllerIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().string("Producto creado con exito"));
     }
+
     @Test
     @WithMockUser(authorities = {"CUSTOMER"})
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -98,6 +96,7 @@ public class ProductControllerIntegrationTest {
                 });
 
     }
+
     @Test
     @WithMockUser(authorities = {"ADMIN"})
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -231,6 +230,7 @@ public class ProductControllerIntegrationTest {
         String content = result.getResponse().getContentAsString();
         assertThat(content).contains("El producto no esta registrado");
     }
+
     @Test
     @WithMockUser(authorities = "ADMIN")
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -243,6 +243,7 @@ public class ProductControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk());
         assertFalse(productRepository.findById(productId).isPresent());
     }
+
     @Test
     @WithMockUser(authorities = "ADMIN")
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
