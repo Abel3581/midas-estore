@@ -20,16 +20,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -61,6 +65,7 @@ public class ProductControllerIntegrationTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN"})
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testCreateProductWithAdminRole() throws Exception {
         // Preparar una solicitud POST con el cuerpo adecuado
         ProductRequest request = ProductUtil.createProductTest();
@@ -76,6 +81,7 @@ public class ProductControllerIntegrationTest {
     }
     @Test
     @WithMockUser(authorities = {"CUSTOMER"})
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testCreateProductWithCustomerRole() throws Exception {
         // Preparar una solicitud POST con el cuerpo adecuado
         ProductRequest request = ProductUtil.createProductTest();
@@ -94,6 +100,7 @@ public class ProductControllerIntegrationTest {
     }
     @Test
     @WithMockUser(authorities = {"ADMIN"})
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testCreateProductDuplicate() throws Exception {
 
         ProductRequest request = ProductUtil.createProductTest();
@@ -117,6 +124,7 @@ public class ProductControllerIntegrationTest {
 
     @Test
     @WithMockUser(authorities = "ADMIN")
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testGetProductById() throws Exception {
         Long productId = 1L;
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/products/" + productId))
@@ -137,8 +145,9 @@ public class ProductControllerIntegrationTest {
 
     @Test
     @WithMockUser(authorities = "ADMIN")
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testGetProductByIdFailure() throws Exception {
-        Long productId = 3L;
+        Long productId = 7L;
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/products/" + productId))
                 .andExpect(status().isNotFound())
                 .andReturn();
@@ -149,6 +158,7 @@ public class ProductControllerIntegrationTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN", "CUSTOMER"})
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testGetAllProduct() throws Exception {
         // Realizar la solicitud GET al controlador para obtener todos los productos
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/products"))
@@ -172,6 +182,7 @@ public class ProductControllerIntegrationTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN", "CUSTOMER"})
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testUpdateProduct() throws Exception {
         Product product = ProductUtil.createProductEntityTest();
         productRepository.save(product);
@@ -202,15 +213,16 @@ public class ProductControllerIntegrationTest {
 
     @Test
     @WithMockUser(authorities = {"ADMIN","CUSTOMER"})
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testUpdateProductFailure() throws Exception {
-        Product product = ProductUtil.createProductEntityTest();
+        Product product = ProductUtil.createProducUpdatetEntityTest();
         productRepository.save(product);
 
-        ProductUpdateRequest request = ProductUtil.createProductUpdateTest();
+        ProductUpdateRequest request = ProductUtil.createProductUpdateFailureTest();
 
         String updateJson = objectMapper.writeValueAsString(request);
 
-        Long productId = 10L;
+        Long productId = 1000L;
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/products/" + productId)
                         .content(updateJson)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -218,5 +230,35 @@ public class ProductControllerIntegrationTest {
                 .andReturn();
         String content = result.getResponse().getContentAsString();
         assertThat(content).contains("El producto no esta registrado");
+    }
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+    public void testDeletedProduct() throws Exception {
+        Product product = ProductUtil.createProductEntityTest();
+        productRepository.save(product);
+
+        Long productId = product.getId();
+        mockMvc.perform(delete("/products/" + productId))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        assertFalse(productRepository.findById(productId).isPresent());
+    }
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+    public void testDeleteProductNotFound() throws Exception {
+        // Intentar eliminar un producto que no existe
+
+        Long productId = 20L;
+        MvcResult result = mockMvc.perform(delete("/products/" + productId))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                        .andReturn();
+
+        assertFalse(productRepository.findById(productId).isPresent());
+        // Obtener el mensaje de la excepción
+        String errorMessage = result.getResponse().getContentAsString();
+        // Realizar verificaciones en el mensaje de la excepción
+        assertThat(errorMessage).contains("El producto no esta registrado");
+
     }
 }
