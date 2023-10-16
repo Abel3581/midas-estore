@@ -24,12 +24,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -218,5 +221,33 @@ public class ProductControllerIntegrationTest {
                 .andReturn();
         String content = result.getResponse().getContentAsString();
         assertThat(content).contains("El producto no esta registrado");
+    }
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void testDeletedProduct() throws Exception {
+        Product product = ProductUtil.createProductEntityTest();
+        productRepository.save(product);
+
+        Long productId = product.getId();
+        mockMvc.perform(delete("/products/" + productId))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+        assertFalse(productRepository.findById(productId).isPresent());
+    }
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    public void testDeleteProductNotFound() throws Exception {
+        // Intentar eliminar un producto que no existe
+
+        Long productId = 20L;
+        MvcResult result = mockMvc.perform(delete("/products/" + productId))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                        .andReturn();
+
+        assertFalse(productRepository.findById(productId).isPresent());
+        // Obtener el mensaje de la excepción
+        String errorMessage = result.getResponse().getContentAsString();
+        // Realizar verificaciones en el mensaje de la excepción
+        assertThat(errorMessage).contains("El producto no esta registrado");
+
     }
 }
