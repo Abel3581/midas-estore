@@ -22,7 +22,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final HttpServletRequest request;
+
 
     @PostMapping
     public ResponseEntity<String> create(@Valid @RequestBody ProductRequest request){
@@ -37,6 +37,7 @@ public class ProductController {
         ProductResponse response = productService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
     @GetMapping
     public ResponseEntity<List<ProductResponse>> getAllProduct(){
         List<ProductResponse> responses = productService.getAllProduct();

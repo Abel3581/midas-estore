@@ -25,4 +25,13 @@ public class Product {
     private boolean state;
     private int stock;
 
+
+    public Product(String name, double price, int count, boolean state, int stock, String description) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.count = count;
+        this.state = state;
+        this.stock = stock;
+    }
 }

@@ -33,6 +33,7 @@ public class ProductMapper {
                 .count(product.getCount())
                 .state(product.isState())
                 .stock(product.getStock())
+                .price(product.getPrice())
                 .build();
     }
 
