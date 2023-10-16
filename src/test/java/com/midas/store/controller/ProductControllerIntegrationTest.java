@@ -1,10 +1,13 @@
 package com.midas.store.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midas.store.model.entity.Product;
 import com.midas.store.model.request.ProductRequest;
+import com.midas.store.model.request.ProductUpdateRequest;
 import com.midas.store.model.response.ProductResponse;
+import com.midas.store.model.response.ProductUpdateResponse;
 import com.midas.store.repository.ProductRepository;
 import com.midas.store.service.injectionDependency.ProductService;
 import com.midas.store.testutil.ProductUtil;
@@ -26,6 +29,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -166,5 +170,53 @@ public class ProductControllerIntegrationTest {
         assertEquals("Spring Boot", productResponses.get(1).getName());
     }
 
+    @Test
+    @WithMockUser(authorities = {"ADMIN", "CUSTOMER"})
+    public void testUpdateProduct() throws Exception {
+        Product product = ProductUtil.createProductEntityTest();
+        productRepository.save(product);
 
+        ProductUpdateRequest request = ProductUtil.createProductUpdateTest();
+
+        String updateJson = objectMapper.writeValueAsString(request);
+
+        Long productId = product.getId();
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/products/" + productId)
+                .content(updateJson)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        // Obtener la respuesta JSON como una cadena
+        String responseContent = result.getResponse().getContentAsString();
+        // Analizar la respuesta JSON a un objeto ProductUpdateResponse
+        ProductUpdateResponse updateResponse = objectMapper.readValue(responseContent, ProductUpdateResponse.class);
+        // Realizar verificaciones en el objeto ProductUpdateResponse
+        assertEquals("JavaScript", updateResponse.getName());
+        assertEquals(7000, updateResponse.getPrice(), 0.01);
+        assertEquals("29", updateResponse.getDescription());
+        assertEquals(60, updateResponse.getStock());
+        assertTrue(updateResponse.isState());
+        assertEquals(30, updateResponse.getCount());
+        assertEquals("Producto actualizado", updateResponse.getMessage());
+    }
+
+    @Test
+    @WithMockUser(authorities = {"ADMIN","CUSTOMER"})
+    public void testUpdateProductFailure() throws Exception {
+        Product product = ProductUtil.createProductEntityTest();
+        productRepository.save(product);
+
+        ProductUpdateRequest request = ProductUtil.createProductUpdateTest();
+
+        String updateJson = objectMapper.writeValueAsString(request);
+
+        Long productId = 10L;
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/products/" + productId)
+                        .content(updateJson)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andReturn();
+        String content = result.getResponse().getContentAsString();
+        assertThat(content).contains("El producto no esta registrado");
+    }
 }

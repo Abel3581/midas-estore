@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
         return response;
     }
 
-    @Override
+    @Override//No lleva exception ya que si no encuentra productos devuelve una lista vacia
     public List<ProductResponse> getAllProduct() {
         List<Product> products = productRepository.findAll();
         List<ProductResponse> responses = productMapper.mapToProductResponseList(products);

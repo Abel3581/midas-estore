@@ -2,6 +2,7 @@ package com.midas.store.testutil;
 
 import com.midas.store.model.entity.Product;
 import com.midas.store.model.request.ProductRequest;
+import com.midas.store.model.request.ProductUpdateRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,28 +21,33 @@ public class ProductUtil {
                 .build();
     }
 
-        public static List<Product> createProductListTest() {
-            return List.of(
-                    new Product("Java", 19.99, 100, true, 10, "17"),
-                    new Product("Spring Boot", 20.99, 100, true, 19, "3.14")
-            );
-        }
-        /*List<Product> productList = new ArrayList<>();
-        Product product = new Product();
-        product.setName("Java");
-        product.setPrice(19.99);
-        product.setStock(100);
-        product.setState(true);
-        product.setCount(10);
-        product.setDescription("17");
-        Product product1 = new Product();
-        product1.setName("Spring boot");
-        product1.setPrice(10000);
-        product1.setStock(100);
-        product1.setState(true);
-        product1.setCount(19);
-        product1.setDescription("3.14");
-        productList.addAll(productList);
-        return productList;*/
+    public static List<Product> createProductListTest() {
+        return List.of(
+                new Product("Java", 19.99, 100, true, 10, "17"),
+                new Product("Spring Boot", 20.99, 100, true, 19, "3.14")
+        );
+    }
+
+    public static Product createProductEntityTest(){
+        return Product.builder()
+                .name("Python")
+                .price(9000)
+                .count(39)
+                .state(true)
+                .stock(18)
+                .description("12")
+                .build();
+    }
+    public static ProductUpdateRequest createProductUpdateTest(){
+        return ProductUpdateRequest.builder()
+                .name("JavaScript")
+                .price(7000)
+                .stock(60)
+                .state(true)
+                .count(30)
+                .description("29")
+                .build();
+    }
+
 
 }
