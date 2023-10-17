@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "products")
-public class Product {
+public class ProductEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +26,23 @@ public class Product {
     private int stock;
 
 
-    public Product(String name, double price, int count, boolean state, int stock, String description) {
+    public ProductEntity(String name, double price, int count, boolean state, int stock, String description) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.count = count;
         this.state = state;
         this.stock = stock;
+    }
+
+    public ProductEntity(long id, String name, double price, int count, boolean state, int stock, String description) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.count = count;
+        this.state = state;
+        this.stock = stock;
+        this.description = description;
     }
 
 

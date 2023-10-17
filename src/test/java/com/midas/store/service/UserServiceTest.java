@@ -44,11 +44,7 @@ public class UserServiceTest {
         // Simula la lista de usuarios que se espera devolver desde el repositorio
         List<UserEntity> userEntities = DataServiceUtil.createUsersTest();
 
-
         // Mock del UserRepository para devolver la lista simulada
-        when(userRepository.findAll()).thenReturn(userEntities);
-
-        // Mockear el comportamiento de UserRepository para devolver la lista simulada
         when(userRepository.findAll()).thenReturn(userEntities);
 
         // Mockear el comportamiento de UserMapper para mapear las entidades a respuestas de usuario

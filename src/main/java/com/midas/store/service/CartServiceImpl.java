@@ -3,7 +3,7 @@ package com.midas.store.service;
 import com.midas.store.exception.CartNotFoundException;
 import com.midas.store.mapper.CartMapper;
 import com.midas.store.model.entity.CartEntity;
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.response.CartResponse;
 import com.midas.store.repository.CartRepository;
 import com.midas.store.service.injectionDependency.CartService;
@@ -33,8 +33,8 @@ public class CartServiceImpl implements CartService {
             log.error(String.format("El carrito con id %s no está registrado", cartId));
             throw new  CartNotFoundException(String.format("El carrito con id %s no está registrado", cartId));
         }
-        Product product = productService.findById(productId);
-        cart.get().addProduct(product);
+        ProductEntity productEntity = productService.findById(productId);
+        cart.get().addProduct(productEntity);
         cartRepository.save(cart.get());
 
     }

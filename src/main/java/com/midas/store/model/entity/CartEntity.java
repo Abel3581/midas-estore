@@ -26,11 +26,11 @@ public class CartEntity {
     @ManyToMany(cascade = {CascadeType.REMOVE, CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "product_cart", joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> products = new ArrayList<>();
+    private List<ProductEntity> productEntities = new ArrayList<>();
 
-    public void addProduct(Product product){
-        products.add(product);
-        total = total + product.getPrice();
+    public void addProduct(ProductEntity productEntity){
+        productEntities.add(productEntity);
+        total = total + productEntity.getPrice();
     }
 
 }

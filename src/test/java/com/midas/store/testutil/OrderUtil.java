@@ -1,12 +1,10 @@
 package com.midas.store.testutil;
 
 import com.midas.store.enums.RoleEnum;
-import com.midas.store.model.entity.Order;
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.entity.RoleEntity;
 import com.midas.store.model.entity.UserEntity;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -24,8 +22,8 @@ public class OrderUtil {
                 .roles(Set.of(new RoleEntity(1L, RoleEnum.CUSTOMER)))
                 .build();
     }
-    public static Product createProductOrderTest(){
-        return Product.builder()
+    public static ProductEntity createProductOrderTest(){
+        return ProductEntity.builder()
                 .name("Python")
                 .price(9000)
                 .count(39)
@@ -34,10 +32,10 @@ public class OrderUtil {
                 .description("12")
                 .build();
     }
-    public static List<Product> productListOrder(){
+    public static List<ProductEntity> productListOrder(){
         return List.of(
-                new Product("Java", 19.99, 100, true, 10, "17"),
-                new Product("Spring Boot", 20.99, 100, true, 19, "3.14")
+                new ProductEntity("Java", 19.99, 100, true, 10, "17"),
+                new ProductEntity("Spring Boot", 20.99, 100, true, 19, "3.14")
         );
     }
 

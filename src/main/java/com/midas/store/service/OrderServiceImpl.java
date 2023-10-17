@@ -4,7 +4,7 @@ import com.midas.store.exception.CartEmptyException;
 import com.midas.store.mapper.OrderMapper;
 import com.midas.store.model.entity.CartEntity;
 import com.midas.store.model.entity.Order;
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.response.OrderResponse;
 import com.midas.store.repository.OrderRepository;
 import com.midas.store.service.injectionDependency.CartService;
@@ -33,23 +33,23 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void purchase(Long cartId) {
         CartEntity cart = cartService.buyACar(cartId);
-        if(cart.getProducts().isEmpty()){
+        if(cart.getProductEntities().isEmpty()){
             log.error(String.format("El carro con id: %s esta vacio", cartId));
             throw new CartEmptyException("El carrito esta vacio");
         }else {
             Order order = orderMapper.createOrder(cart);
 
-            List<Product> productsInCart = cart.getProducts();
-            List<Product> savedProducts = new ArrayList<>();
+            List<ProductEntity> productsInCart = cart.getProductEntities();
+            List<ProductEntity> savedProductEntities = new ArrayList<>();
 
-            for (Product product : productsInCart) {
-                Product existingProduct = productService.findById(product.getId());
-                if (existingProduct != null) {
+            for (ProductEntity productEntity : productsInCart) {
+                ProductEntity existingProductEntity = productService.findById(productEntity.getId());
+                if (existingProductEntity != null) {
 
-                    savedProducts.add(existingProduct);
+                    savedProductEntities.add(existingProductEntity);
                 }
             }
-            order.setProducts(savedProducts);
+            order.setProductEntities(savedProductEntities);
             orderRepository.save(order);
         }
     }

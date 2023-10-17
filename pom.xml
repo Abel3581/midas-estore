@@ -12,7 +12,7 @@
 	<artifactId>store</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>store</name>
-	<description>product store</description>
+	<description>productEntity store</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>

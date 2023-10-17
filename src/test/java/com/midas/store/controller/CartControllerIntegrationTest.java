@@ -2,7 +2,7 @@ package com.midas.store.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midas.store.model.entity.CartEntity;
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.entity.UserEntity;
 import com.midas.store.repository.CartRepository;
 import com.midas.store.repository.ProductRepository;
@@ -58,8 +58,8 @@ public class CartControllerIntegrationTest {
     public void setUp(){
         UserEntity user = AuthUtil.createUserCartTest();
         userRepository.save(user);
-        Product product = ProductUtil.createProductEntityTest();
-        productRepository.save(product);
+        ProductEntity productEntity = ProductUtil.createProductEntityTest();
+        productRepository.save(productEntity);
         CartEntity cart = new CartEntity(1L, 0, user, new ArrayList<>());
         user.setCart(cart);
         cartRepository.save(cart);
@@ -90,7 +90,7 @@ public class CartControllerIntegrationTest {
         CartEntity cartEntity = new CartEntity();
         cartEntity.setId(2L);
         cartEntity.setTotal(2777);
-        cartEntity.setProducts(new ArrayList<>());
+        cartEntity.setProductEntities(new ArrayList<>());
         cartEntity.setUser(new UserEntity());
         cartRepository.save(cartEntity);
         // Realiza una solicitud GET al endpoint del controlador
