@@ -1,8 +1,10 @@
 package com.midas.store.testutil;
 
 import com.midas.store.enums.RoleEnum;
+import com.midas.store.model.entity.CartEntity;
 import com.midas.store.model.entity.RoleEntity;
 import com.midas.store.model.entity.UserEntity;
+import com.midas.store.model.request.LoginRequest;
 import com.midas.store.model.request.RegisterRequest;
 
 import java.util.List;
@@ -18,6 +20,18 @@ public class DataServiceUtil {
                 .dni("1234567890")
                 .password("12345678")
                 .username("abel@gmail.com")
+                .build();
+    }
+    public static LoginRequest createLoginRequest(){
+        return LoginRequest.builder()
+                .username("abel@gmail.com")
+                .password("12345678")
+                .build();
+    }
+    public static LoginRequest createLoginRequestFailure(){
+        return LoginRequest.builder()
+                .username("failure@gmail.com")
+                .password("12345678")
                 .build();
     }
     public static UserEntity createUserTest(){
@@ -43,5 +57,13 @@ public class DataServiceUtil {
         role.setId(1L);
         role.setName(RoleEnum.CUSTOMER);
         return role;
+    }
+    public static List<UserEntity> createUsersTest(){
+        return List.of(
+                new UserEntity(1L,"Abel","Acevedo","user@gmail.com","12345678","1234567890","Garin",
+                        null, new CartEntity()),
+                new UserEntity(2L,"Abel","Acevedo","user2@gmail.com","12345678","1234567890","Garin",
+                        null, new CartEntity())
+        );
     }
 }

@@ -1,20 +1,23 @@
 package com.midas.store.service;
 
 
+import com.midas.store.exception.UserNotFoundException;
+import com.midas.store.model.request.LoginRequest;
 import com.midas.store.model.request.RegisterRequest;
+import com.midas.store.model.response.LoginResponse;
 import com.midas.store.model.response.RegisterResponse;
 import com.midas.store.testutil.DataServiceUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Transactional
 @SpringBootTest
@@ -24,26 +27,9 @@ public class AuthServiceTest {
     private AuthServiceImpl authService;
 
 
-
     @BeforeEach
     public void setUp() {
-        /*
-        role = RoleEntity.builder()
-                .id(2L)
-                .name(RoleEnum.CUSTOMER)
-                .build();
-        // Inicializa los mocks
-        user = UserEntity.builder()
-                .name("ABel")
-                .dni("1234567890")
-                .address("Address")
-                .username("abel@gmail.com")
-                .lastname("Acevedo")
-                .password("12345678")
-                .roles(Set.of(role))
-                .cart(new CartEntity())
-                .build();
-*/
+
     }
 
     @Test
@@ -71,63 +57,36 @@ public class AuthServiceTest {
         });
 
         // Verifica que la excepción tenga el código de estado HttpStatus.NOT_FOUND.
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
+        assertEquals(NOT_FOUND, exception.getStatusCode());
         // Verifica el mensaje de la excepción si es necesario.
         assertEquals("El Cliente ya esta registrado", exception.getReason());
     }
-/*
-    @Test
-    public void testRegister_DuplicateUser() {
-        // Configurar el comportamiento esperado de los mocks
 
-        // Crear una solicitud de registro con un nombre de usuario que ya existe
-        RegisterRequest request = new RegisterRequest();
-        request.setUsername("existing_user@gmail.com");
-        // Configura otros campos según sea necesario
-
-        // Simular el UserRepository para que encuentre un usuario con el mismo nombre
-        UserEntity existingUser = new UserEntity();
-        when(userRepository.findByUsername(request.getUsername())).thenReturn(Optional.of(existingUser));
-
-        // Verificar que se lance una excepción ResponseStatusException
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> authService.register(request));
-
-        // Verificar que la excepción tenga el código de estado HTTP NOT_FOUND (404)
-        assertEquals("El Cliente ya esta registrado", exception.getReason());
-    }
-
- */
-/*
     @Test
     public void testLogin_Success() {
-        // Configurar el comportamiento esperado de los mocks para probar el inicio de sesión
+        authService.register(DataServiceUtil.createUserRequestTest());
+        // Aquí puedes realizar pruebas de inicio de sesión de usuario a nivel de servicio.
+        LoginRequest loginRequest = DataServiceUtil.createLoginRequest();
+        // Inicializa loginRequest con datos de prueba.
+        LoginResponse response = authService.login(loginRequest);
 
-        // Crear una solicitud de inicio de sesión de ejemplo
-        LoginRequest request = new LoginRequest();
-        request.setUsername("example@gmail.com");
-        request.setPassword("password");
-        // Configura otros campos según sea necesario
-
-        // Simula la autenticación con el AuthenticationManager
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword());
-        when(authenticationManager.authenticate(authenticationToken)).thenReturn(authenticationToken);
-
-        // Simula la búsqueda de un usuario en el UserRepository
-        UserEntity userEntity = new UserEntity();
-        // Configura los campos del usuario según sea necesario
-        when(userRepository.findByUsername(request.getUsername())).thenReturn(Optional.of(userEntity));
-
-        // Simula la generación de un token JWT
-        when(jwtUtil.generate(request.getUsername())).thenReturn("token");
-
-        // Llamar al método que deseas probar
-        LoginResponse response = authService.login(request);
-
-        // Realizar aserciones sobre la respuesta
-        assertNotNull(response);
-        assertEquals("token", response.getToken());
-        // Puedes realizar más aserciones según las expectativas de tu servicio.
+        assertEquals("Logueo exitoso", response.getMessage());
     }
 
- */
+    @Test
+    public void testLogin_NotFoundException(){
+        authService.register(DataServiceUtil.createUserRequestTest());
+
+        LoginRequest request = DataServiceUtil.createLoginRequestFailure();
+        UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->{
+            authService.login(request);
+        });
+        // Verifica que la excepción tenga el código de estado HttpStatus.NOT_FOUND.
+        assertEquals(NOT_FOUND, NOT_FOUND );
+        // Verifica el mensaje de la excepción si es necesario.
+        assertEquals("No hay ninguna cuenta asociada con la dirección de correo electrónico.", exception.getMessage());
+
+    }
+
+
 }
