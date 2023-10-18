@@ -1,21 +1,19 @@
 package com.midas.store.mapper;
 
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.request.ProductRequest;
-import com.midas.store.model.request.ProductUpdateRequest;
 import com.midas.store.model.response.ProductResponse;
 import com.midas.store.model.response.ProductUpdateResponse;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class ProductMapper {
 
-    public Product mapToProductRequest(ProductRequest request) {
-        return Product.builder()
+    public ProductEntity mapToProductRequest(ProductRequest request) {
+        return ProductEntity.builder()
                 .name(request.getName())
                 .description(request.getDescription())
                 .count(request.getCount())
@@ -25,33 +23,34 @@ public class ProductMapper {
                 .build();
     }
 
-    public ProductResponse mapToProductResponse(Product product) {
+    public ProductResponse mapToProductResponse(ProductEntity productEntity) {
         return ProductResponse.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .description(product.getDescription())
-                .count(product.getCount())
-                .state(product.isState())
-                .stock(product.getStock())
+                .id(productEntity.getId())
+                .name(productEntity.getName())
+                .description(productEntity.getDescription())
+                .count(productEntity.getCount())
+                .state(productEntity.isState())
+                .stock(productEntity.getStock())
+                .price(productEntity.getPrice())
                 .build();
     }
 
-    public List<ProductResponse> mapToProductResponseList(List<Product> products) {
-        return products.stream()
+    public List<ProductResponse> mapToProductResponseList(List<ProductEntity> productEntities) {
+        return productEntities.stream()
                 .map(product -> mapToProductResponse(product))
                 .collect(Collectors.toList());
     }
 
 
-    public ProductUpdateResponse mapToProductUpdate(Product product) {
+    public ProductUpdateResponse mapToProductUpdate(ProductEntity productEntity) {
         return ProductUpdateResponse.builder()
-                .name(product.getName())
-                .stock(product.getStock())
-                .count(product.getCount())
-                .price(product.getPrice())
-                .description(product.getDescription())
+                .name(productEntity.getName())
+                .stock(productEntity.getStock())
+                .count(productEntity.getCount())
+                .price(productEntity.getPrice())
+                .description(productEntity.getDescription())
                 .message("Producto actualizado")
-                .state(product.isState())
+                .state(productEntity.isState())
                 .build();
     }
 }

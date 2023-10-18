@@ -1,5 +1,6 @@
 package com.midas.store.service;
 
+import com.midas.store.exception.UserNotFoundException;
 import com.midas.store.model.entity.UserEntity;
 import com.midas.store.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                     user.get().getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName().name())).toList());
         }else {
             log.error(LOGIN_EXCEPTION_MESSAGE);
-            throw new UsernameNotFoundException(LOGIN_EXCEPTION_MESSAGE);
+            throw new UserNotFoundException(LOGIN_EXCEPTION_MESSAGE);
         }
 
     }

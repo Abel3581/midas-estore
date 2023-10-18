@@ -36,6 +36,8 @@ public class AuthServiceImpl implements AuthService {
     private final AuthenticationManager authenticationManager;
     private final RoleRepository roleRepository;
 
+
+
     @Transactional
     @Override
     public RegisterResponse register(RegisterRequest request) {
@@ -51,7 +53,6 @@ public class AuthServiceImpl implements AuthService {
         response.setToken(jwtUtil.generate(request.getUsername()));
         return response;
     }
-
 
     @Override
     public LoginResponse login(LoginRequest request) {

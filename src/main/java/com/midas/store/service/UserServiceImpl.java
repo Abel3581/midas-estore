@@ -23,8 +23,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponse> getAllUsers() {
         log.info("Entrando al getAllUsers del servicio");
-        List<UserEntity> products = userRepository.findAll();
-        List<UserResponse> responses = userMapper.mapToUserEntityList(products);
+        List<UserEntity> users = userRepository.findAll();
+        List<UserResponse> responses = userMapper.mapToUserEntityList(users);
         log.info(responses);
         return responses;
     }

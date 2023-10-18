@@ -2,8 +2,9 @@ package com.midas.store.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -19,11 +20,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private double total;
-    private Date purchaseDate;
+    private LocalDateTime purchaseDate;
     @ManyToOne
-    @JoinColumn(name = "user_id")
     private UserEntity user;
     @ManyToMany
-    private List<Product> products = new ArrayList<>();
+    private List<ProductEntity> productEntities = new ArrayList<>();
 
 }

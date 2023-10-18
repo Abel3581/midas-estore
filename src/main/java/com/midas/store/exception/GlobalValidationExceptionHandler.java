@@ -7,6 +7,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,4 +45,17 @@ public class GlobalValidationExceptionHandler {
     public ResponseEntity<String> cartNotFoundException(CartNotFoundException ex){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
+    @ExceptionHandler(CartEmptyException.class)
+    public ResponseEntity<String> cartEmptyException(CartEmptyException ex){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+    }
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<String> userAlreadyExist(ResponseStatusException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getReason());
+    }
+    @ExceptionHandler(IncorrectPasswordException.class)
+    public ResponseEntity<String> incorrectPasswordException(IncorrectPasswordException ex) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(ex.getMessage());
+    }
+
 }

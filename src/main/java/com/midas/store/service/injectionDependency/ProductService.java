@@ -1,6 +1,6 @@
 package com.midas.store.service.injectionDependency;
 
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.request.ProductRequest;
 import com.midas.store.model.request.ProductUpdateRequest;
 import com.midas.store.model.response.ProductResponse;
@@ -20,5 +20,5 @@ public interface ProductService {
 
     void deleted(Long id);
 
-    Product findById(Long productId);
+    ProductEntity findById(Long productId);
 }

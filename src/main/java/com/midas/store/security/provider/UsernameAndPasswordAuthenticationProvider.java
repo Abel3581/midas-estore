@@ -1,5 +1,6 @@
 package com.midas.store.security.provider;
 
+import com.midas.store.exception.IncorrectPasswordException;
 import com.midas.store.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -31,7 +32,7 @@ public class UsernameAndPasswordAuthenticationProvider implements Authentication
             return new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), userDetails.getAuthorities());
         } else {
             log.error(BAD_CREDENTIALS_MESSAGE);
-            throw new BadCredentialsException(BAD_CREDENTIALS_MESSAGE);
+            throw new IncorrectPasswordException(BAD_CREDENTIALS_MESSAGE);
         }
     }
 

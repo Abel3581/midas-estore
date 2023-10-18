@@ -3,7 +3,7 @@ package com.midas.store.service;
 import com.midas.store.exception.ProductAlreadyExistsException;
 import com.midas.store.exception.ProductNotFoundException;
 import com.midas.store.mapper.ProductMapper;
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.request.ProductRequest;
 import com.midas.store.model.request.ProductUpdateRequest;
 import com.midas.store.model.response.ProductResponse;
@@ -30,10 +30,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void create(ProductRequest request) {
         log.info("Entrando al metodo crear producto en servicio");
-        Product product = productRepository.findByNameAndDescription(request.getName(),request.getDescription());
-        if(product == null ){
-            Product productCreate = productMapper.mapToProductRequest(request);
-            productRepository.save(productCreate);
+        ProductEntity productEntity = productRepository.findByNameAndDescription(request.getName(),request.getDescription());
+        if(productEntity == null ){
+            ProductEntity productEntityCreate = productMapper.mapToProductRequest(request);
+            productRepository.save(productEntityCreate);
 
         }else {
             log.error("Error al crear producto");
@@ -45,7 +45,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponse getById(Long id) {
-        Optional<Product> product = productRepository.findById(id);
+        Optional<ProductEntity> product = productRepository.findById(id);
         if (product.isEmpty()){
             log.error("Producto no encontrado con id: " + id);
             throw new ProductNotFoundException("El producto no esta registrado");
@@ -54,35 +54,35 @@ public class ProductServiceImpl implements ProductService {
         return response;
     }
 
-    @Override
+    @Override//No lleva exception ya que si no encuentra productos devuelve una lista vacia
     public List<ProductResponse> getAllProduct() {
-        List<Product> products = productRepository.findAll();
-        List<ProductResponse> responses = productMapper.mapToProductResponseList(products);
+        List<ProductEntity> productEntities = productRepository.findAll();
+        List<ProductResponse> responses = productMapper.mapToProductResponseList(productEntities);
         return responses;
     }
 
     @Transactional
     @Override
     public ProductUpdateResponse update(ProductUpdateRequest request, Long id) {
-        Optional<Product> productOptional = productRepository.findById(id);
+        Optional<ProductEntity> productOptional = productRepository.findById(id);
         if (productOptional.isEmpty()){
             log.error("Producto no encontrado con id: " + id);
             throw new ProductNotFoundException("El producto no esta registrado");
         }
-        Product product = productOptional.get();
-        product.setName(request.getName());
-        product.setDescription(request.getDescription());
-        product.setPrice(request.getPrice());
-        product.setStock(request.getStock());
-        product.setState(request.isState());
-        product.setCount(request.getCount());
-        ProductUpdateResponse response = productMapper.mapToProductUpdate(product);
+        ProductEntity productEntity = productOptional.get();
+        productEntity.setName(request.getName());
+        productEntity.setDescription(request.getDescription());
+        productEntity.setPrice(request.getPrice());
+        productEntity.setStock(request.getStock());
+        productEntity.setState(request.isState());
+        productEntity.setCount(request.getCount());
+        ProductUpdateResponse response = productMapper.mapToProductUpdate(productEntity);
         return response;
     }
 
     @Override
     public void deleted(Long id) {
-        Optional<Product> product = productRepository.findById(id);
+        Optional<ProductEntity> product = productRepository.findById(id);
         if (product.isEmpty()){
             log.error("Producto no encontrado con id: " + id);
             throw new ProductNotFoundException("El producto no esta registrado");
@@ -91,8 +91,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product findById(Long productId) {
-        Optional<Product> product = productRepository.findById(productId);
+    public ProductEntity findById(Long productId) {
+        Optional<ProductEntity> product = productRepository.findById(productId);
         if (product.isEmpty()){
             log.error("Producto no encontrado con id: " + productId);
             throw new ProductNotFoundException("El producto no esta registrado");

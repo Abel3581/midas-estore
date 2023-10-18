@@ -17,7 +17,7 @@ public class CartMapper {
                 .id(cart.getId())
                 .total(cart.getTotal())
                 .user(userMapper.mapToUserResponse(cart.getUser()))
-                .productResponses(productMapper.mapToProductResponseList(cart.getProducts()))
+                .productResponses(productMapper.mapToProductResponseList(cart.getProductEntities()))
                 .build();
     }
 }
