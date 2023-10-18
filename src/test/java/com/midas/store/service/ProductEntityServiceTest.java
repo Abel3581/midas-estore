@@ -33,6 +33,7 @@ import static org.mockito.Mockito.*;
 @SpringBootTest
 @ActiveProfiles("test")
 public class ProductEntityServiceTest {
+
     @MockBean
     private ProductRepository productRepository;
 
