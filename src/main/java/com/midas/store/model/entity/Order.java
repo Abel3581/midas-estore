@@ -5,7 +5,6 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Builder
@@ -25,6 +24,6 @@ public class Order {
     @ManyToOne
     private UserEntity user;
     @ManyToMany
-    private List<Product> products = new ArrayList<>();
+    private List<ProductEntity> productEntities = new ArrayList<>();
 
 }

@@ -13,8 +13,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -23,6 +21,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -51,6 +50,7 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
 
         http.authorizeRequests()
+                .requestMatchers(publicLinks).permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/users").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/products").hasAnyAuthority("ADMIN")
@@ -58,7 +58,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/products/{id}").hasAnyAuthority("ADMIN","CUSTOMER")
                 .requestMatchers(HttpMethod.PUT, "/products/{id}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.DELETE,"products/{id}").hasAnyAuthority("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/orders/{cartId}").permitAll()
+                .requestMatchers(HttpMethod.POST, "/orders/{cartId}").hasAnyAuthority("CUSTOMER")
                 .requestMatchers(HttpMethod.GET,"/orders").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/orders/{cartId}").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.PUT,"/carts/{cartId}/{productId}").hasAnyAuthority("CUSTOMER")
@@ -91,4 +91,11 @@ public class SecurityConfig {
 
         return source;
     }
+
+    private String[] publicLinks ={"/swagger-ui/**","/v2/api-docs","/v3/api-docs/**",
+            "/swagger-resources","/swagger-resources/**","/configuration/ui",
+            "/configuration/security","swagger-ui.html","/webjars/**","/configuration/**",
+            "/v3/api-docs"};
+
+
 }

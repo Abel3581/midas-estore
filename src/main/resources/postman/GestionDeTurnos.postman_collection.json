@@ -1,0 +1,635 @@
+{
+	"info": {
+		"_postman_id": "a2eadada-a9ab-4bbf-a5fc-ca140b455701",
+		"name": "GestionDeTurnos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18443499"
+	},
+	"item": [
+		{
+			"name": "Test-midas",
+			"item": [
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "CreateProduct",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Anteojos\",\r\n    \"description\":\"Infinit\",\r\n    \"price\":2000,\r\n    \"count\":30,\r\n    \"state\":true,\r\n    \"stock\":200\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getProductById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetAllProducts",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpc3MiOiJUYWctU29sdXRpb24iLCJpYXQiOjE2OTcyNDUyMzUsImV4cCI6MTY5ODEwOTIzNX0.9EbGFggQUYn4uNVP9sLAQBP36aZELyNlkYRPDd_nyTWGRdxq2A5Y0yGlTIFDCNcxg_E7pLWKxLgYIcHqTFRX4w",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/products",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmVsQGdtYWlsLmNvbSIsImlzcyI6IlRhZy1Tb2x1dGlvbiIsImlhdCI6MTY5NzIzNzk5MiwiZXhwIjoxNjk4MTAxOTkyfQ.7ZjNZ6XxTR-UuUw3kRicHFPVA47EtQbI0NVv7bnclRPffYMGnKKug00RdVp2YeDvH9pn8h3WL3o3mBcDV3esWw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Reloj\",\r\n    \"description\":\"Puma\",\r\n    \"price\":5000,\r\n    \"count\":60,\r\n    \"state\":true,\r\n    \"stock\":1000\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Request",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/products/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"products",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "User",
+					"item": [
+						{
+							"name": "GetAllUsers",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"users"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Cart",
+					"item": [
+						{
+							"name": "addProductToCart",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjbGllbnRlQGdtYWlsLmNvbSIsImlzcyI6IlRhZy1Tb2x1dGlvbiIsImlhdCI6MTY5NzMxMDY3MCwiZXhwIjoxNjk4MTc0NjcwfQ.BccQg8iafxdogFnvXGdSUP8k6nUgz3YAWoWEMAi8biWxkGiyOBRO8hygFbsVC6VH4ZjzZXV6o_T1UxHq2meKEQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/carts/1/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"carts",
+										"1",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/carts/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"carts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "Comprar",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjbGllbnRlQGdtYWlsLmNvbSIsImlzcyI6IlRhZy1Tb2x1dGlvbiIsImlhdCI6MTY5NzMxMDY3MCwiZXhwIjoxNjk4MTc0NjcwfQ.BccQg8iafxdogFnvXGdSUP8k6nUgz3YAWoWEMAi8biWxkGiyOBRO8hygFbsVC6VH4ZjzZXV6o_T1UxHq2meKEQ",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/orders/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"orders",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetAllOrders",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpc3MiOiJUYWctU29sdXRpb24iLCJpYXQiOjE2OTczNzc5MjUsImV4cCI6MTY5ODI0MTkyNX0.8BM4lUN_EeSYGI3rJXp_m18jf6ubt2Ft2hGl3jF_KgNKf754Mw1PZ3WYW6VR9U7ZZdyfj9ODFOKbP-tbk0Zhgw",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/orders",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Registro",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"Abel\",\r\n    \"lastname\":\"Acevedo\",\r\n    \"username\":\"abel@gmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"dni\":\"1234567890\",\r\n    \"address\":\"Tortuiguitas BS AS\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/auth/register",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"username\":\"admin@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/auth/login",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "registro",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Abel\",\r\n    \"lastname\":\"Acevedo\",\r\n    \"title\":\"DR\",\r\n    \"username\":\"abel3581@gmail.com\",\r\n    \"password\":\"12345678\",\r\n    \"country\":\"Argentina\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"abel3581@gmail.com\",\r\n    \"password\":\"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjpbeyJhdXRob3JpdHkiOiJQUk9GRVNTSU9OQUwifV0sInN1YiI6ImFiZWwzNTgxQGdtYWlsLmNvbSIsImlhdCI6MTY5NDkwOTA3NywiZXhwIjoxNjk0OTEwNTE3fQ.UweML1_aoezLUKWVh660Z4U-BqSYEoZ3S4asK0XKALE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/demo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"demo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createUserSecurity",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"abel@gmail.com\",\r\n    \"username\":\"abel\",\r\n    \"password\":\"12345678\",\r\n    \"roles\":[\"USER\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/createUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"createUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"abel\",\r\n    \"password\":\"12345678\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpc3MiOiJUYWctU29sdXRpb24iLCJpYXQiOjE2OTcxNjc1ODAsImV4cCI6MTY5ODAzMTU4MH0.2_427YfHAa5tAnrJntH_40JxwyhK6yeMQv9HRfyrNMXtJlCiSm8KEXl6eAsz5OEgz-W7cEj6ufCG3iaB5jeTJQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/test/accessAdmin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"test",
+						"accessAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmVsQGdtYWlsLmNvbSIsImlzcyI6IlRhZy1Tb2x1dGlvbiIsImlhdCI6MTY5NjUyMDMwNSwiZXhwIjoxNjk3Mzg0MzA1fQ.Vp4gCNlO5tlE3vX1cSICmx6zMLN0YR7ioSrz0PQ_udPfrHD1VL2T8p9rlZNjPrG4aIZmIhvP3aMNYGcwo4sWpg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"Abel\",\r\n    \"lastname\":\"Acevedo\",\r\n    \"title\":\"DR\",\r\n    \"domicile\":\"Garin\",\r\n    \"phone\":\"1234567890\",\r\n    \"province\":\"Buenos Aires\",\r\n    \"city\":\"Garin\",\r\n    \"whatsapp\":\"1170197183\",\r\n    \"specialty\":\"Especialidad\",\r\n    \"mat_nac\":\"112a12\",\r\n    \"mat_prov\":\"345g5\",\r\n    \"presentation\":\"Presentacion\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/profile/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"profile",
+						"1"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProfileByIdUser",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhYmVsQGdtYWlsLmNvbSIsImlzcyI6IlRhZy1Tb2x1dGlvbiIsImlhdCI6MTY5NjUyMDMwNSwiZXhwIjoxNjk3Mzg0MzA1fQ.Vp4gCNlO5tlE3vX1cSICmx6zMLN0YR7ioSrz0PQ_udPfrHD1VL2T8p9rlZNjPrG4aIZmIhvP3aMNYGcwo4sWpg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "userId",
+							"value": "1",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/profile/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"profile",
+						"1"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

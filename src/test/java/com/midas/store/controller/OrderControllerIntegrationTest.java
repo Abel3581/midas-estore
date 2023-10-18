@@ -4,10 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midas.store.model.entity.CartEntity;
 import com.midas.store.model.entity.Order;
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.entity.UserEntity;
 import com.midas.store.model.response.OrderResponse;
-import com.midas.store.model.response.ProductResponse;
 import com.midas.store.repository.CartRepository;
 import com.midas.store.repository.OrderRepository;
 import com.midas.store.repository.ProductRepository;
@@ -62,16 +61,16 @@ public class OrderControllerIntegrationTest {
         UserEntity user = OrderUtil.createUserOrderTest();
         userRepository.save(user);
 
-        Product product = OrderUtil.createProductOrderTest();
-        productRepository.save(product);
+        ProductEntity productEntity = OrderUtil.createProductOrderTest();
+        productRepository.save(productEntity);
 
-        CartEntity cart = new CartEntity(1L, 0, user, List.of(product));
+        CartEntity cart = new CartEntity(1L, 0, user, List.of(productEntity));
         user.setCart(cart);
         cartRepository.save(cart);
 
         Order order = new Order();
         order.setTotal(cart.getTotal());
-        order.setProducts(cart.getProducts());
+        order.setProductEntities(cart.getProductEntities());
         order.setUser(user);
         order.setId(1L);
         order.setPurchaseDate(LocalDateTime.now());

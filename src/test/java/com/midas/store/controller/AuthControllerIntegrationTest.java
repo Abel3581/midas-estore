@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test") // Activa el perfil de pruebas
+@ActiveProfiles("test")
 public class AuthControllerIntegrationTest {
 
     @Autowired

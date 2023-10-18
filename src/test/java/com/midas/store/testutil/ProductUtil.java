@@ -1,6 +1,6 @@
 package com.midas.store.testutil;
 
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.request.ProductRequest;
 import com.midas.store.model.request.ProductUpdateRequest;
 
@@ -20,15 +20,15 @@ public class ProductUtil {
                 .build();
     }
 
-    public static List<Product> createProductListTest() {
+    public static List<ProductEntity> createProductListTest() {
         return List.of(
-                new Product("Java", 19.99, 100, true, 10, "17"),
-                new Product("Spring Boot", 20.99, 100, true, 19, "3.14")
+                new ProductEntity("Java", 19.99, 100, true, 10, "17"),
+                new ProductEntity("Spring Boot", 20.99, 100, true, 19, "3.14")
         );
     }
 
-    public static Product createProductEntityTest(){
-        return Product.builder()
+    public static ProductEntity createProductEntityTest(){
+        return ProductEntity.builder()
                 .name("Python")
                 .price(9000)
                 .count(39)
@@ -61,8 +61,8 @@ public class ProductUtil {
 
     }
 
-    public static Product createProducUpdatetEntityTest() {
-        return Product.builder()
+    public static ProductEntity createProducUpdatetEntityTest() {
+        return ProductEntity.builder()
                 .name("PHP")
                 .price(9000)
                 .count(39)

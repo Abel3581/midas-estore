@@ -3,7 +3,7 @@ package com.midas.store.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.midas.store.model.entity.Product;
+import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.request.ProductRequest;
 import com.midas.store.model.request.ProductUpdateRequest;
 import com.midas.store.model.response.ProductResponse;
@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test") // Activa el perfil de pruebas
-public class ProductControllerIntegrationTest {
+public class ProductEntityControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -55,8 +55,8 @@ public class ProductControllerIntegrationTest {
     @Before
     public void setUp() {
         // Cargar datos iniciales en la base de datos de prueba
-        List<Product> product = ProductUtil.createProductListTest();
-        productRepository.saveAll(product);
+        List<ProductEntity> productEntity = ProductUtil.createProductListTest();
+        productRepository.saveAll(productEntity);
     }
 
 
@@ -183,14 +183,14 @@ public class ProductControllerIntegrationTest {
     @WithMockUser(authorities = {"ADMIN", "CUSTOMER"})
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testUpdateProduct() throws Exception {
-        Product product = ProductUtil.createProductEntityTest();
-        productRepository.save(product);
+        ProductEntity productEntity = ProductUtil.createProductEntityTest();
+        productRepository.save(productEntity);
 
         ProductUpdateRequest request = ProductUtil.createProductUpdateTest();
 
         String updateJson = objectMapper.writeValueAsString(request);
 
-        Long productId = product.getId();
+        Long productId = productEntity.getId();
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.put("/products/" + productId)
                 .content(updateJson)
                 .contentType(MediaType.APPLICATION_JSON))
@@ -214,8 +214,8 @@ public class ProductControllerIntegrationTest {
     @WithMockUser(authorities = {"ADMIN","CUSTOMER"})
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testUpdateProductFailure() throws Exception {
-        Product product = ProductUtil.createProducUpdatetEntityTest();
-        productRepository.save(product);
+        ProductEntity productEntity = ProductUtil.createProducUpdatetEntityTest();
+        productRepository.save(productEntity);
 
         ProductUpdateRequest request = ProductUtil.createProductUpdateFailureTest();
 
@@ -235,10 +235,10 @@ public class ProductControllerIntegrationTest {
     @WithMockUser(authorities = "ADMIN")
     @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
     public void testDeletedProduct() throws Exception {
-        Product product = ProductUtil.createProductEntityTest();
-        productRepository.save(product);
+        ProductEntity productEntity = ProductUtil.createProductEntityTest();
+        productRepository.save(productEntity);
 
-        Long productId = product.getId();
+        Long productId = productEntity.getId();
         mockMvc.perform(delete("/products/" + productId))
                 .andExpect(MockMvcResultMatchers.status().isOk());
         assertFalse(productRepository.findById(productId).isPresent());

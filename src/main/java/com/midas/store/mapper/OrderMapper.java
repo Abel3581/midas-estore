@@ -40,7 +40,7 @@ public class OrderMapper {
                 .total(order.getTotal())
                 .purchaseDate(order.getPurchaseDate())
                 .userResponse(userMapper.mapToUserResponse(order.getUser()))
-                .productResponses(productMapper.mapToProductResponseList(order.getProducts()))
+                .productResponses(productMapper.mapToProductResponseList(order.getProductEntities()))
                 .build();
     }
 }
