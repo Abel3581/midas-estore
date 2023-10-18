@@ -13,8 +13,6 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -51,6 +49,10 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable());
 
         http.authorizeRequests()
+                .requestMatchers("/v3/api-docs").permitAll()
+                .requestMatchers("/swagger-ui/**","/v2/api-docs","/v3/api-docs/**",
+                        "/swagger-resources","/swagger-resources/**","/configuration/ui",
+                        "/configuration/security","swagger-ui.html","/webjars/**","/configuration/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .requestMatchers(HttpMethod.GET,"/users").hasAnyAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/products").hasAnyAuthority("ADMIN")
@@ -91,4 +93,6 @@ public class SecurityConfig {
 
         return source;
     }
+
+
 }

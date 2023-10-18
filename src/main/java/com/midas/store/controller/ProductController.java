@@ -5,6 +5,7 @@ import com.midas.store.model.request.ProductUpdateRequest;
 import com.midas.store.model.response.ProductResponse;
 import com.midas.store.model.response.ProductUpdateResponse;
 import com.midas.store.service.injectionDependency.ProductService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/products")
+@SecurityRequirement(name = "bearer-key")
 public class ProductController {
 
     private final ProductService productService;
