@@ -60,9 +60,9 @@ public class DataServiceUtil {
     }
     public static List<UserEntity> createUsersTest(){
         return List.of(
-                new UserEntity(1L,"Abel","Acevedo","user@gmail.com","12345678","1234567890","Garin",
+                new UserEntity(10L,"Abel","Acevedo","user@gmail.com","12345678","1234567890","Garin",
                         null, new CartEntity()),
-                new UserEntity(2L,"Abel","Acevedo","user2@gmail.com","12345678","1234567890","Garin",
+                new UserEntity(20L,"Abel","Acevedo","user2@gmail.com","12345678","1234567890","Garin",
                         null, new CartEntity())
         );
     }

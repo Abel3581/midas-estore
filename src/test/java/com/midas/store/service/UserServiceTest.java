@@ -2,40 +2,40 @@ package com.midas.store.service;
 
 import com.midas.store.mapper.UserMapper;
 import com.midas.store.model.entity.UserEntity;
+import com.midas.store.model.request.ProductRequest;
 import com.midas.store.model.response.UserResponse;
 import com.midas.store.repository.UserRepository;
 import com.midas.store.service.injectionDependency.UserService;
 import com.midas.store.testutil.DataServiceUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
-
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 @Transactional
 @SpringBootTest
+@ActiveProfiles("test")
 public class UserServiceTest {
 
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private UserRepository userRepository;
+    @MockBean
+     private UserRepository userRepository;
 
-    @Autowired
+    @Mock
     private UserMapper userMapper;
 
     @BeforeEach
     public void setUp() {
         // Inicializa los mocks y comportamientos necesarios
-        userRepository = mock(UserRepository.class);
-        userMapper = mock(UserMapper.class);
+
     }
 
     @Test
@@ -49,8 +49,8 @@ public class UserServiceTest {
 
         // Mockear el comportamiento de UserMapper para mapear las entidades a respuestas de usuario
         List<UserResponse> expectedUserResponses = List.of(
-                new UserResponse(1L,"Abel","Acevedo","user@gmail.com","1234567890","Garin"),
-                new UserResponse(2L,"Abel","Acevedo","user2@gmail.com","1234567890","Garin")
+                new UserResponse(10L,"Abel","Acevedo","user@gmail.com","1234567890","Garin"),
+                new UserResponse(20L,"Abel","Acevedo","user2@gmail.com","1234567890","Garin")
         );
 
         when(userMapper.mapToUserEntityList(userEntities)).thenReturn(expectedUserResponses);

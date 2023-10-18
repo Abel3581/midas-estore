@@ -20,7 +20,7 @@ public class SpringDocConfig {
                 .info(new Info().title("Store API Midas")
                         .description("Test Midas App")
                         .version("v0.0.1")
-                        .license(new License().name("Test java 17").url("https://www.abelacevedo.com.ar")))
+                        .license(new License().name("Test java 17, Spring boot 3.14")))
                 .externalDocs(new ExternalDocumentation()
                         .description("Portfolio Abel Acevedo v1")
                         .url("https://www.abelacevedo.com.ar"))

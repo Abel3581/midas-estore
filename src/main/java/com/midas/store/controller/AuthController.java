@@ -27,7 +27,7 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @Operation(summary = "Registrar Usuario", description = "registra un usuario CUSTOMER")
+    @Operation(summary = "Registrar Usuario", description = "Registra un usuario CUSTOMER")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Registro exitoso",
                     content = { @Content(mediaType = "application/json",

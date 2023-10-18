@@ -19,4 +19,7 @@ public class UserResponse {
     //private String password;
     private String dni;
     private String address;
+
+
+
 }
