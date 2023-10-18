@@ -51,7 +51,6 @@ Requisitos técnicos que se valoran en la resolución del ejercicio:
 
 <ul>
     <li>Java 17</li>
-    <li>password: 12345678</li>
     <li>Spring boot 3.14</li>
     <li>lombok</li>
     <li>mysql data base</li>
