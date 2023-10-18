@@ -44,6 +44,7 @@ Requisitos técnicos que se valoran en la resolución del ejercicio:
 
 <h3>UML</h3>
 ![uml.png](src%2Fmain%2Fresources%2Fstatic%2Fuml.png)
+![uml](https://github.com/Abel3581/midas-estore/assets/59884602/0dc7c16b-f196-404a-a610-d999914c4d3d)
 
 <h4>Tecnologias</h4>
 - Java 17
