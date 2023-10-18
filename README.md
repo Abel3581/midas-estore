@@ -47,7 +47,7 @@ Requisitos técnicos que se valoran en la resolución del ejercicio:
 
 
 
-<h4>Tecnologias</h4>
+<h3>Tecnologias</h3>
 
 <ul>
     <li>Java 17</li>
@@ -79,3 +79,6 @@ Al inicializar la API por primera vez, se crea un usuario con rol ADMIN y dos ro
 
 <h3>Postman</h3>
 Puedes encontrar la colección de Postman en resource/postman/
+
+<h4>Swagger</h4>
+http://localhost:8080/swagger-ui/index.html#/
