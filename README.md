@@ -43,7 +43,8 @@ Requisitos técnicos que se valoran en la resolución del ejercicio:
 
 
 <h3>UML</h3>
-![uml.png](src%2Fmain%2Fresources%2Fstatic%2Fuml.png)
+<img src="src\main\resources\static\uml.png" alt="UML">
+
 
 
 <h4>Tecnologias</h4>
@@ -69,4 +70,4 @@ Al inicializar la API por primera vez, se crea un usuario con rol ADMIN y dos ro
 - password: 12345678
 
 <h3>Postman</h3>
-Puedes encontrar la colección de Postman aca [GestionDeTurnos.postman_collection.json](src%2Fmain%2Fresources%2Fpostman%2FGestionDeTurnos.postman_collection.json).
+Puedes encontrar la colección de Postman en resource/postman/
