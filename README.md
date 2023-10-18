@@ -47,15 +47,20 @@ Requisitos técnicos que se valoran en la resolución del ejercicio:
 
 
 <h4>Tecnologias</h4>
-- Java 17
-- Spring boot 3.14
-- lombok
-- mysql data base
-- Spring security
-- JWT
-- Manejo de roles
-- Postman
-- Junit y Mockito -> integration test
+
+<ul>
+    <li>Java 17</li>
+    <li>password: 12345678</li>
+    <li>Spring boot 3.14</li>
+    <li>lombok</li>
+    <li>mysql data base</li>
+    <li>Spring security</li>
+    <li>JWT</li>
+    <li>Manejo de roles</li>
+    <li>Junit y Mockito -> integration test</li>
+
+</ul>
+
 
 
 
@@ -65,8 +70,11 @@ Al inicializar la API por primera vez, se crea un usuario con rol ADMIN y dos ro
 
 
 <h3>Usuario Admin</h3>
-- username: admin@gmail.com
-- password: 12345678
+<ul>
+<li>username: admin@gmail.com</li>
+<li>password: 12345678</li>
+</ul>
+
 
 <h3>Postman</h3>
 Puedes encontrar la colección de Postman en resource/postman/
