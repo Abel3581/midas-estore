@@ -70,9 +70,7 @@ public class ProductController {
                     content = { @Content(mediaType = "application/json",
                             array = @ArraySchema(schema = @Schema(implementation = ProductResponse.class)))}),
             @ApiResponse(responseCode = "403", description = "",
-                    content = @Content),
-            @ApiResponse(responseCode = "404", description = "El producto no esta registrado",
-                    content = @Content)})
+                    content = @Content),})
     @GetMapping
     public ResponseEntity<List<ProductResponse>> getAllProduct(){
         List<ProductResponse> responses = productService.getAllProduct();

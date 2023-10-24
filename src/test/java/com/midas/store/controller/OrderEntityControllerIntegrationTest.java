@@ -3,7 +3,7 @@ package com.midas.store.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.midas.store.model.entity.CartEntity;
-import com.midas.store.model.entity.Order;
+import com.midas.store.model.entity.OrderEntity;
 import com.midas.store.model.entity.ProductEntity;
 import com.midas.store.model.entity.UserEntity;
 import com.midas.store.model.response.OrderResponse;
@@ -40,7 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ActiveProfiles("test") // Activa el perfil de pruebas
-public class OrderControllerIntegrationTest {
+public class OrderEntityControllerIntegrationTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -68,13 +68,13 @@ public class OrderControllerIntegrationTest {
         user.setCart(cart);
         cartRepository.save(cart);
 
-        Order order = new Order();
-        order.setTotal(cart.getTotal());
-        order.setProductEntities(cart.getProductEntities());
-        order.setUser(user);
-        order.setId(1L);
-        order.setPurchaseDate(LocalDateTime.now());
-        orderRepository.save(order);
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setTotal(cart.getTotal());
+        orderEntity.setProductEntities(cart.getProductEntities());
+        orderEntity.setUser(user);
+        orderEntity.setId(1L);
+        orderEntity.setPurchaseDate(LocalDateTime.now());
+        orderRepository.save(orderEntity);
     }
 
     @Test

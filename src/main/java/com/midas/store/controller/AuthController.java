@@ -47,7 +47,7 @@ public class AuthController {
                             schema = @Schema(implementation = LoginResponse.class))}),
             @ApiResponse(responseCode = "400", description = "El password debe tener entre 8 y 25 carcateres",
                     content = @Content),
-            @ApiResponse(responseCode = "404", description = "No hay ninguna cuenta asociada con la dirección de correo electrónico.",
+            @ApiResponse(responseCode = "404", description = "El nombre de usuario o contraseña es incorrecto",
                     content = @Content)})
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request){

@@ -1,7 +1,7 @@
 package com.midas.store.mapper;
 
 import com.midas.store.model.entity.CartEntity;
-import com.midas.store.model.entity.Order;
+import com.midas.store.model.entity.OrderEntity;
 import com.midas.store.model.response.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -18,29 +18,29 @@ public class OrderMapper {
     private final UserMapper userMapper;
     private final ProductMapper productMapper;
 
-    public Order createOrder(CartEntity cart) {
+    public OrderEntity createOrder(CartEntity cart) {
         LocalDateTime currentDateTime = LocalDateTime.now(ZoneId.systemDefault());
 
-        return Order.builder()
+        return OrderEntity.builder()
                 .total(cart.getTotal())
                 .user(cart.getUser())
                 .purchaseDate(currentDateTime)
                 .build();
     }
 
-    public List<OrderResponse> mapToOrderResponseList(List<Order> orders) {
-        return orders.stream()
+    public List<OrderResponse> mapToOrderResponseList(List<OrderEntity> orderEntities) {
+        return orderEntities.stream()
                 .map(order -> mapToOrderResponse(order))
                 .collect(Collectors.toList());
     }
 
-    private OrderResponse mapToOrderResponse(Order order) {
+    private OrderResponse mapToOrderResponse(OrderEntity orderEntity) {
         return OrderResponse.builder()
-                .id(order.getId())
-                .total(order.getTotal())
-                .purchaseDate(order.getPurchaseDate())
-                .userResponse(userMapper.mapToUserResponse(order.getUser()))
-                .productResponses(productMapper.mapToProductResponseList(order.getProductEntities()))
+                .id(orderEntity.getId())
+                .total(orderEntity.getTotal())
+                .purchaseDate(orderEntity.getPurchaseDate())
+                .userResponse(userMapper.mapToUserResponse(orderEntity.getUser()))
+                .productResponses(productMapper.mapToProductResponseList(orderEntity.getProductEntities()))
                 .build();
     }
 }
