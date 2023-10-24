@@ -9,4 +9,6 @@ public interface CartService {
     CartResponse findById(Long id);
 
     CartEntity buyACar(Long cartId);
+
+    void updateCart(CartEntity cart);
 }

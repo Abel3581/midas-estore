@@ -60,4 +60,9 @@ public class CartServiceImpl implements CartService {
         return cart.get();
     }
 
+    @Override
+    public void updateCart(CartEntity cart) {
+        cartRepository.save(cart);
+    }
+
 }

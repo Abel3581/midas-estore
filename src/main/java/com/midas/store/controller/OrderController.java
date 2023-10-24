@@ -39,7 +39,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body("Compra exitosa");
     }
 
-    @Operation(summary = "Devuelve todas las compras", description = "Devuelve todas las compras sistema")
+    @Operation(summary = "Devuelve todas las compras", description = "Devuelve todas las compras del sistema")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "",
                     content = { @Content(mediaType = "application/json",

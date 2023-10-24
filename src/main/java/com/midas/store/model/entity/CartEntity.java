@@ -32,5 +32,8 @@ public class CartEntity {
         productEntities.add(productEntity);
         total = total + productEntity.getPrice();
     }
+    public void clearCart(){
+        productEntities.clear();
+    }
 
 }

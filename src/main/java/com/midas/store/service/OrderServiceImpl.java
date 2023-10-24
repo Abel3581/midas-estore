@@ -45,12 +45,13 @@ public class OrderServiceImpl implements OrderService {
             for (ProductEntity productEntity : productsInCart) {
                 ProductEntity existingProductEntity = productService.findById(productEntity.getId());
                 if (existingProductEntity != null) {
-
                     savedProductEntities.add(existingProductEntity);
                 }
             }
             order.setProductEntities(savedProductEntities);
             orderRepository.save(order);
+            cart.clearCart();
+            cartService.updateCart(cart);
         }
     }
 
